@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Summary</title>
+</head>
+<body>
+    <h1>Video Summary</h1>
+    <h2>Transcript:</h2>
+    <p>{{ transcript }}</p>
+
+    <h2>Summary:</h2>
+    <p>{{ summary }}</p>
+
+    <h2>Ask a Question</h2>
+    <form action="/ask" method="post">
+        <input type="hidden" name="summary" value="{{ summary }}">
+        <label for="question">Question:</label>
+        <input type="text" name="question" id="question" required>
+        <button type="submit">Get Answer</button>
+    </form>
+
+    {% if answer %}
+        <h2>Answer:</h2>
+        <p>{{ answer }}</p>
+    {% endif %}
+</body>
+</html>

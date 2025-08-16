@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <title>YouTube Transcript Summarizer</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>YouTube Video Summarizer</h1>
+
+        <form method="post">
+            <label for="youtube_video_url">YouTube Video URL:</label>
+            <input type="text" id="youtube_video_url" name="youtube_video_url" required>
+            <button type="submit">Get Summary</button>
+        </form>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+        {% if summary %}
+        <h2>{{ title }}</h2>
+        <div class="section summary">
+            <h3>Summary:</h3>
+            <p>{{ summary }}</p>
+            <a href="{{ url_for('download_summary') }}" class="btn">Download Summary</a>
+        </div>
+
+        <div class="section transcript">
+            <h3>Transcript:</h3>
+            <p>{{ transcript }}</p>
+        </div>
+
+        <div class="section qa">
+            <h3>Questions and Answers:</h3>
+            <form method="post">
+                <label for="question">Ask a question about the summary:</label>
+                <input type="text" id="question" name="question" required>
+                <button type="submit">Get Answer</button>
+            </form>
+
+            {% for item in qa %}
+            <div>
+                <p><strong>Question:</strong> {{ item.question }}</p>
+                <p><strong>Answer:</strong> {{ item.answer }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
